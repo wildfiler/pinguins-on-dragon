@@ -19,5 +19,9 @@ module Engine
         super
       end
     end
+
+    def rect
+      [x, y, w, h]
+    end
   end
 end
