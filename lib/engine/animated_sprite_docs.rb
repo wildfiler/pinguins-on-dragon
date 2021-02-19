@@ -5,6 +5,7 @@ module Engine
       [
         :docs_class,
         :docs_new,
+        :docs_sequence=,
       ]
     end
 
@@ -42,6 +43,32 @@ module Engine
 - repeat - ~true~ or ~false~
 
   All ~Engine::Sprite~ attributes can be used too.
+      DOCS
+    end
+
+    def docs_sequence=
+      <<-DOCS
+* ENGINE: ~Engine::AnimatedSprite#sequence=~
+
+  You can change sequence for sprite dynamically:
+
+#+begin_src
+def tick(args)
+  if args.state.tick_count.zero?
+    args.state.spritesheet = Engine::SpriteSheet.new(name: "penguin", width: 32 * 3, sprite_size: [32, 32]) 
+    args.state.penguin = Engine::AnimatedSprite.new(
+      spritesheet: spritesheet, 
+      sequence: [0, 1, 2],
+    )
+  end
+
+  if args.inputs.ketboard.key_held.space
+    args.state.penguin.sequence = [3, 4, 5]
+  end
+end
+#+end_src
+
+  It will set new sequence for the animation and will set ~start_at~ of the sprite to current tick_count.
       DOCS
     end
   end

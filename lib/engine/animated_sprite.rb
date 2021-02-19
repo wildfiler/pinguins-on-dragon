@@ -27,6 +27,12 @@ module Engine
       @path ||= spritesheet.path
     end
 
+    def sequence=(sequence)
+      @sequence = sequence
+      @sequence_length = nil
+      @start_at = Kernel.tick_count
+    end
+
     def draw_override(ffi_draw)
       tile_x, tile_y = spritesheet.id_to_xy(current_sprite_id)
 
@@ -42,6 +48,4 @@ module Engine
       )
     end
   end
-
-
 end
