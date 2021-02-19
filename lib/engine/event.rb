@@ -15,7 +15,11 @@ module Engine
     end
 
     def to_s
-      "#<#{self.class.name}:#{object_id} type=#{type}>"
+      "#<#{self.class.name}:#{object_id} type=#{type} object=#{object}>"
+    end
+
+    def inspect
+      to_s
     end
   end
 end

@@ -13,8 +13,9 @@ module Engine
     end
 
     def trigger(event)
-      subscribers.each do |(subscriber, type, callback)|
-        next unless type == event.type
+      subscribers.each do |subscriber_args|
+        next unless __valid_event?(event, *subscriber_args)
+        subscriber, _type, callback = subscriber_args
 
         if callback
           subscriber.send(callback, event)
@@ -22,6 +23,20 @@ module Engine
           subscriber.call(event)
         end
       end
+    end
+
+    def __valid_event?(event, *subscriber_args)
+      _subscriber, type, _callback = subscriber_args
+
+      type == event.type
+    end
+
+    def trigger_new_event(type, object = nil, mouse)
+      trigger(event_class.new(type, object || mouse, mouse))
+    end
+
+    def event_class
+      raise "You need to define event_class method in your observer class."
     end
   end
 end

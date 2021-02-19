@@ -6,15 +6,15 @@ module Engine
       mouse = args.inputs.mouse
 
       if mouse.click
-        trigger(Engine::MouseEvent.new(:click, mouse.click, mouse))
+        trigger_new_event(:click, mouse.click, mouse)
       end
 
       if mouse.moved
-        trigger(Engine::MouseEvent.new(:moved, mouse, mouse))
+        trigger_new_event(:moved, mouse)
       end
 
       if mouse.up
-        trigger(Engine::MouseEvent.new(:up, mouse.up, mouse))
+        trigger_new_event(:up, mouse.up, mouse)
       end
     end
 
@@ -23,17 +23,14 @@ module Engine
       subscribers << [subscriber, type, callback, global || !is_rect]
     end
 
-    def trigger(event)
-      subscribers.each do |(subscriber, type, callback, global)|
-        next unless type == event.type
-        next unless global || event.mouse.inside_rect?(subscriber)
+    def __valid_event?(event, *subscriber_args)
+      subscriber, type, _callback, global = subscriber_args
 
-        if callback
-          subscriber.send(callback, event)
-        else
-          subscriber.call(event)
-        end
-      end
+      type == event.type && (global || event.mouse.inside_rect?(subscriber))
+    end
+
+    def event_class
+      @event_class ||= Engine::MouseEvent
     end
   end
 end
