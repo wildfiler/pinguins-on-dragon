@@ -1,5 +1,22 @@
 
 class Cat < Engine::AnimatedSprite
+  DEFAULT_SEQUENCE = [1]
+  MOVE_SEQUENCES = {
+    up: [9, 11],
+    down: [0, 2],
+    left: [3, 5],
+    right: [6,8],
+    idle_up: [10],
+    idle_down: [1],
+    idle_left: [4],
+    idle_right: [7],
+  }.freeze
+
+  def initialize(*)
+    super
+    @moved = false
+  end
+
   def on_mouse_click(event)
     @clicked = true
     @offset_x = event.object.x - x
@@ -8,7 +25,6 @@ class Cat < Engine::AnimatedSprite
 
   def on_mouse_move(event)
     if @clicked
-      puts event.mouse
       self.x = event.mouse.x - @offset_x
       self.y = event.mouse.y - @offset_y
     end
@@ -16,6 +32,49 @@ class Cat < Engine::AnimatedSprite
 
   def on_mouse_up(event)
     @clicked = false
+  end
+
+  def on_key_hold(event)
+    moved = false
+
+    if event.keyboard.up
+      self.y += 1
+      set_animation(:up)
+      moved = true
+    end
+    if event.keyboard.down
+      self.y -= 1
+      set_animation(:down)
+      moved = true
+    end
+    if event.keyboard.right
+      self.x += 1
+      set_animation(:right)
+      moved = true
+    end
+    if event.keyboard.left
+      self.x -= 1
+      set_animation(:left)
+      moved = true
+    end
+
+    if moved
+      @moved = true
+    else
+      set_animation(:"idle_#{@direction}") if @moved
+      @moved = false
+    end
+  end
+
+  private
+
+  def set_animation(type)
+    self.sequence = move_sequence(type) if @direction != type
+    @direction = type
+  end
+
+  def move_sequence(type)
+    MOVE_SEQUENCES.fetch(type, DEFAULT_SEQUENCE)
   end
 end
 
@@ -34,38 +93,12 @@ class MyGame < Engine::Game
       h: 100,
     )
     @sprite2.attributes = { x: 100, y: 100 }
-    @keyboard = Engine::KeyboardEvents.new
-    @keyboard.subscribe(self, :key_held, :on_key_hold)
-
-    @mouse = Engine::MouseEvents.new
 
     @cat = Cat.new(x: 400, y: 150, spritesheet: @spritesheet, sequence: [0, 2])
-    @mouse.subscribe(@cat, :click, :on_mouse_click)
-    @mouse.subscribe(@cat, :moved, :on_mouse_move, global: true)
-    @mouse.subscribe(@cat, :up, :on_mouse_up, global: true)
-    @mouse.subscribe(-> (event) { puts event.object }, :up)
-  end
-
-  def mouse_events
-    @mouse
-  end
-
-  def on_click(event)
-    puts event.object
-  end
-
-  def on_moved(event)
-    puts event.object
-  end
-
-  def on_key_hold(event)
-    if event.keyboard.up
-      @animated_sprite.y += 1
-    end
-
-    if event.keyboard.down
-      @animated_sprite.y -= 1
-    end
+    mouse.subscribe(@cat, :click, :on_mouse_click)
+    mouse.subscribe(@cat, :moved, :on_mouse_move, global: true)
+    mouse.subscribe(@cat, :up, :on_mouse_up, global: true)
+    keyboard.subscribe(@cat, :key_held, :on_key_hold)
   end
 
   def tick(args)
