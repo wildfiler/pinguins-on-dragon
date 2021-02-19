@@ -11,13 +11,19 @@ module Engine
         $game.init(args)
       end
       $game.args = args
-      $game&.tick(args)
+      $game&.perform_tick(args)
     end
 
     def init(args)
     end
 
     def tick(args)
+    end
+
+    def perform_tick(args)
+      keyboard.tick(args)
+      mouse.tick(args)
+      tick(args)
     end
 
     def tick_count
