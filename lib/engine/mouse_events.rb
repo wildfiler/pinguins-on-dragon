@@ -7,6 +7,16 @@ module Engine
 
       if mouse.click
         trigger_new_event(:click, mouse.click, mouse)
+        if @last_click
+          if (@last_click + 0.5.seconds).elapsed?
+            @last_click = Kernel.tick_count
+          else
+            trigger_new_event(:double_click, mouse.click, mouse)
+            @last_click = nil
+          end
+        else
+          @last_click = Kernel.tick_count
+        end
       end
 
       if mouse.moved
@@ -26,7 +36,7 @@ module Engine
     def __valid_event?(event, *subscriber_args)
       subscriber, type, _callback, global = subscriber_args
 
-      type == event.type && (global || event.mouse.inside_rect?(subscriber))
+      (type == event.type || type == :all) && (global || event.mouse.inside_rect?(subscriber))
     end
 
     def event_class

@@ -35,6 +35,15 @@ module Engine
       )
     end
 
+    def animated_sprite(sequence, x = 0, y = 0, klass: Engine::AnimatedSprite)
+      klass.new(
+        x: x,
+        y: y,
+        sequence: sequence,
+        spritesheet: self,
+      )
+    end
+
     def id_to_xy(id)
       y, x = id.divmod(@row_size)
       [x * sprite_w, y * sprite_h]

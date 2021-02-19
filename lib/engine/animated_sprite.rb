@@ -1,6 +1,7 @@
 module Engine
   class AnimatedSprite < Engine::Sprite
-    attr_reader :spritesheet, :sequence, :start_at, :duration, :repeat
+    attr_reader :spritesheet, :sequence
+    attr_accessor :start_at, :duration, :repeat
 
     def initialize(spritesheet:, sequence: [], start_at: 0, duration: 15, repeat: true, **attributes)
       @w = spritesheet.sprite_w
@@ -20,7 +21,7 @@ module Engine
 
     def current_sprite_id
       id = start_at.frame_index(sequence_length, duration, repeat)
-      sequence[id]
+      sequence[id || 0]
     end
 
     def path
@@ -46,6 +47,22 @@ module Engine
         angle_anchor_x, angle_anchor_y,
         0, 0, -1, -1,
       )
+    end
+
+    def serialize
+      {
+        path: path,
+        sequence: sequence,
+        start_at: start_at,
+        current_sprite_id: current_sprite_id,
+        duration: duration,
+        repeat: repeat,
+        spritesheet: spritesheet,
+      }
+    end
+
+    def to_s
+      "#<#{self.class.name}:#{object_id} #{serialize.map {|k, v| "#{k}=#{v}"}} >"
     end
   end
 end

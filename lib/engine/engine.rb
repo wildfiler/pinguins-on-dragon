@@ -10,6 +10,9 @@ require 'lib/engine/keyboard_event.rb'
 require 'lib/engine/event_observer.rb'
 require 'lib/engine/keyboard_events.rb'
 require 'lib/engine/mouse_events.rb'
+require 'lib/engine/registry.rb'
+require 'lib/engine/events_dispatcher.rb'
+require 'lib/engine/scene.rb'
 
 module Engine
   module AttributeAssignment; end
@@ -24,4 +27,7 @@ module Engine
   class KeyboardEvents; end
   class MouseEvent < Event; end
   class MouseEvents; end
+  class Registry; end
+  class EventsDispatcher; end
+  class Scene; end
 end

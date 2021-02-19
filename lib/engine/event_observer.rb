@@ -4,8 +4,8 @@ module Engine
       @subscribers ||= []
     end
 
-    def subscribe(subscriber, type = nil, callback = nil)
-      subscribers << [subscriber, type, callback]
+    def subscribe(subscriber, type = nil, callback = nil, global: false)
+      subscribers << [subscriber, type, callback, global]
     end
 
     def unsubscribe(unsubscriber)
@@ -28,7 +28,7 @@ module Engine
     def __valid_event?(event, *subscriber_args)
       _subscriber, type, _callback = subscriber_args
 
-      type == event.type
+      type == event.type || type == :all
     end
 
     def trigger_new_event(type, object = nil, mouse)
