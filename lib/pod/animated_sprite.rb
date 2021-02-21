@@ -1,5 +1,5 @@
-module Engine
-  class AnimatedSprite < Engine::Sprite
+module Pod
+  class AnimatedSprite < Pod::Sprite
     attr_reader :spritesheet, :sequence
     attr_accessor :start_at, :duration, :repeat
 

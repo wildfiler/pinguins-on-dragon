@@ -1,6 +1,6 @@
-module Engine
+module Pod
   class KeyboardEvents
-    include Engine::EventObserver
+    include Pod::EventObserver
 
     def tick(args)
       keyboard = args.inputs.keyboard
@@ -19,7 +19,7 @@ module Engine
     end
 
     def event_class
-      @event_class ||= Engine::KeyboardEvent
+      @event_class ||= Pod::KeyboardEvent
     end
   end
 end

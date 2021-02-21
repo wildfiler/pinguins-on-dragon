@@ -1,4 +1,4 @@
-module Engine
+module Pod
   class UnknownAttribute < NoMethodError
     attr_reader :object, :name
 

@@ -1,4 +1,4 @@
-module Engine
+module Pod
   module GameDocs
     def docs_method_sort_order
       [
@@ -9,23 +9,23 @@ module Engine
 
     def docs_class
       <<-DOCS
-* ENGINE: ~Engine::Game~
+* LIB: ~Pod::Game~
 
 This is main game class of engine. Your custom game class should be a subclass of this class.
   
 ~app/my_game.rb:~
 #+begin_src ruby
-  class MyGame < Engine::Game
+  class MyGame < Pod::Game
   end
 #+end_src
 
 ~app/main.rb~
 #+begin_src ruby
-  require 'lib/engine/engine.rb'
+  require 'lib/pod/pod.rb'
   require 'app/my_game.rb'
 
   def tick(args)
-    Engine::Game.tick(MyGame, args)
+    Pod::Game.tick(MyGame, args)
   end
 #+end_src
       DOCS
@@ -33,17 +33,17 @@ This is main game class of engine. Your custom game class should be a subclass o
 
     def docs_tick
       <<-DOCS
-* ENGINE: ~Engine::Game.tick~
+* LIB: ~Pod::Game.tick~
   
   Use this method in ~app/main.rb~ tick method to perform initialization of your game class and call its ~tick~ method
 on every frame.
 
   #+begin_src ruby
-    require 'lib/engine/engine.rb'
+    require 'lib/pod/pod.rb'
     require 'app/my_game.rb'
     
     def tick(args)
-      Engine::Game.tick(MyGame, args)
+      Pod::Game.tick(MyGame, args)
     end
   #+end_src
       DOCS

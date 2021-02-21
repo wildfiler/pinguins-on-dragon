@@ -1,8 +1,8 @@
-module Engine
+module Pod
   class Sprite
     attr_sprite
 
-    include Engine::AttributeAssignment
+    include Pod::AttributeAssignment
 
     attr_reader :name
     attr_accessor :z_index, :visible

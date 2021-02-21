@@ -1,4 +1,4 @@
-module Engine
+module Pod
   class EventsDispatcher
     attr_reader :events, :observer
 

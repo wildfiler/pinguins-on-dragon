@@ -1,5 +1,5 @@
-module Engine
-  class CompoundSprite < Engine::Sprite
+module Pod
+  class CompoundSprite < Pod::Sprite
     attr_accessor :sprites, :scale_w, :scale_h
 
     def initialize(sprites:, scale_w: 1.0, scale_h: nil, **attributes)

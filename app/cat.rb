@@ -1,4 +1,4 @@
-class Cat < Engine::CompoundSprite
+class Cat < Pod::CompoundSprite
   DEFAULT_SEQUENCE = [1]
   MOVE_SEQUENCES = {
     up: [9, 11],
@@ -12,7 +12,7 @@ class Cat < Engine::CompoundSprite
   }.freeze
 
   def initialize(mouse: mouse, keyboard: keyboard, **attributes)
-    cat = Engine::CompoundSprite.new(
+    cat = Pod::CompoundSprite.new(
       sprites: [
         $game.spritesheets.find(:cat3).animated_sprite(DEFAULT_SEQUENCE),
         $game.spritesheets.find(:shadows).animated_sprite(DEFAULT_SEQUENCE, z_index: -1)

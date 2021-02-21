@@ -1,5 +1,5 @@
-module Engine
-  class KeyboardEvent < Engine::Event
+module Pod
+  class KeyboardEvent < Pod::Event
     attr_reader :keyboard
 
     def initialize(type, object, keyboard)

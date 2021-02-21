@@ -1,5 +1,5 @@
-module Engine
-  class MouseEvent < Engine::Event
+module Pod
+  class MouseEvent < Pod::Event
     attr_reader :mouse
 
     def initialize(type, object, mouse)

@@ -1,4 +1,4 @@
-class CatScene < Engine::Scene
+class CatScene < Pod::Scene
   attr_reader :spritesheet, :cat, :animated_sprite
   def load
     @spritesheet = $game.spritesheets.find(:cat3)

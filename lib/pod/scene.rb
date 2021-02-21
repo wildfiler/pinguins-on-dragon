@@ -1,12 +1,12 @@
-module Engine
+module Pod
   class Scene
     attr_gtk
 
     attr_reader :keyboard, :mouse, :next_scene
 
     def initialize(**attributes)
-      @keyboard = Engine::EventsDispatcher.new(attributes[:keyboard] || $game.keyboard)
-      @mouse = Engine::EventsDispatcher.new(attributes[:mouse] || $game.mouse)
+      @keyboard = Pod::EventsDispatcher.new(attributes[:keyboard] || $game.keyboard)
+      @mouse = Pod::EventsDispatcher.new(attributes[:mouse] || $game.mouse)
     end
 
     def before_load

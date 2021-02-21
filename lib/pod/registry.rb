@@ -1,4 +1,4 @@
-module Engine
+module Pod
   class Registry
     attr_reader :name
 

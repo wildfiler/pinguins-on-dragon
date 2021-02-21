@@ -1,4 +1,4 @@
-module Engine
+module Pod
   module EventObserver
     def subscribers
       @subscribers ||= []

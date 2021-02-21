@@ -1,4 +1,4 @@
-module Engine
+module Pod
   class SpriteSheet
     attr_reader :name, :sprite_w, :sprite_h, :width
 
@@ -19,7 +19,7 @@ module Engine
       end
     end
 
-    def sprite(id, x = 0, y = 0, klass: Engine::Sprite, **attributes)
+    def sprite(id, x = 0, y = 0, klass: Pod::Sprite, **attributes)
       tile_x, tile_y = id_to_xy(id)
 
       klass.new(
@@ -36,7 +36,7 @@ module Engine
       )
     end
 
-    def animated_sprite(sequence, x = 0, y = 0, klass: Engine::AnimatedSprite, **attributes)
+    def animated_sprite(sequence, x = 0, y = 0, klass: Pod::AnimatedSprite, **attributes)
       klass.new(
         x: x,
         y: y,

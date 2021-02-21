@@ -1,4 +1,4 @@
-module Engine
+module Pod
   module AnimatedSpriteDocs
 
     def docs_method_sort_order
@@ -11,20 +11,20 @@ module Engine
 
     def docs_class
       <<-DOCS
-* ENGINE: ~Engine::AnimatedSprite~
+* LIB: ~Pod::AnimatedSprite~
 
-  This is class for creating animated sprites from spritesheets. Subclass of ~Engine::Sprite~.
+  This is class for creating animated sprites from spritesheets. Subclass of ~Pod::Sprite~.
       DOCS
     end
 
     def docs_new
       <<-DOCS
-* ENGINE: ~Engine::AnimatedSprite.new~      
+* LIB: ~Pod::AnimatedSprite.new~      
   To show sequence of sprites from ~Spritesheet~ you need to pass array of ids in sequence attribute:
 
 #+begin_src ruby
-  spritesheet = Engine::SpriteSheet.new(name: "cat", width: 32 * 3, sprite_size: [32, 32])
-  sprite = Engine::AnimatedSprite.new(
+  spritesheet = Pod::SpriteSheet.new(name: "cat", width: 32 * 3, sprite_size: [32, 32])
+  sprite = Pod::AnimatedSprite.new(
     x: 100, 
     y: 100,
     spritesheet: spritesheet, 
@@ -36,27 +36,27 @@ module Engine
 
 *** Attributes:
 
-- spritesheet - ~Engine::Spritesheet~ object
-- sequence - ~Array~ of sprites id from ~Engine::Spritesheet~
+- spritesheet - ~Pod::Spritesheet~ object
+- sequence - ~Array~ of sprites id from ~Pod::Spritesheet~
 - start_at - start animation at ~start_at~ tick
 - duration - duration in ticks, default is 15
 - repeat - ~true~ or ~false~
 
-  All ~Engine::Sprite~ attributes can be used too.
+  All ~Pod::Sprite~ attributes can be used too.
       DOCS
     end
 
     def docs_sequence=
       <<-DOCS
-* ENGINE: ~Engine::AnimatedSprite#sequence=~
+* LIB: ~Pod::AnimatedSprite#sequence=~
 
   You can change sequence for sprite dynamically:
 
 #+begin_src
 def tick(args)
   if args.state.tick_count.zero?
-    args.state.spritesheet = Engine::SpriteSheet.new(name: "penguin", width: 32 * 3, sprite_size: [32, 32]) 
-    args.state.penguin = Engine::AnimatedSprite.new(
+    args.state.spritesheet = Pod::SpriteSheet.new(name: "penguin", width: 32 * 3, sprite_size: [32, 32]) 
+    args.state.penguin = Pod::AnimatedSprite.new(
       spritesheet: spritesheet, 
       sequence: [0, 1, 2],
     )
@@ -73,7 +73,7 @@ end
     end
   end
 
-  class AnimatedSprite < Engine::Sprite
+  class AnimatedSprite < Pod::Sprite
     extend Docs
     extend AnimatedSpriteDocs
   end

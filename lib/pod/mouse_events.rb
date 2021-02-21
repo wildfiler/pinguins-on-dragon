@@ -1,6 +1,6 @@
-module Engine
+module Pod
   class MouseEvents
-    include Engine::EventObserver
+    include Pod::EventObserver
 
     def tick(args)
       mouse = args.inputs.mouse
@@ -40,7 +40,7 @@ module Engine
     end
 
     def event_class
-      @event_class ||= Engine::MouseEvent
+      @event_class ||= Pod::MouseEvent
     end
   end
 end

@@ -1,4 +1,4 @@
-module Engine
+module Pod
   module AttributeAssignment
     def assign_attributes(new_attributes)
       return if new_attributes.nil? || new_attributes.empty?
@@ -8,7 +8,7 @@ module Engine
         if respond_to?(setter)
           send(setter, value)
         else
-          raise Engine::UnknownAttribute.new(self, name)
+          raise Pod::UnknownAttribute.new(self, name)
         end
       end
 

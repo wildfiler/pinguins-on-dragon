@@ -1,4 +1,4 @@
-module Engine
+module Pod
   class Game
     attr_gtk
 
@@ -66,15 +66,15 @@ module Engine
     end
 
     def keyboard
-      @keyboard ||= Engine::KeyboardEvents.new
+      @keyboard ||= Pod::KeyboardEvents.new
     end
 
     def mouse
-      @mouse ||= Engine::MouseEvents.new
+      @mouse ||= Pod::MouseEvents.new
     end
 
     def spritesheets
-      @spritesheets ||= Engine::Registry.new(:spritesheets)
+      @spritesheets ||= Pod::Registry.new(:spritesheets)
     end
 
     def serialize

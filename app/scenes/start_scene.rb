@@ -1,4 +1,4 @@
-class StartScene < Engine::Scene
+class StartScene < Pod::Scene
   def load
     @cats = three_cats
     @label = [grid.w_half + 16, 300.from_top, "Press any key to start.", 10, 1]
@@ -18,7 +18,7 @@ class StartScene < Engine::Scene
   private
 
   def three_cats
-    cat = Engine::CompoundSprite.new(
+    cat = Pod::CompoundSprite.new(
       sprites: [
         $game.spritesheets.find(:cat3).animated_sprite([0, 2], w: 128, h: 128),
         $game.spritesheets.find(:shadows).animated_sprite([0, 2], w: 128, h: 128, z_index: -1)
@@ -31,6 +31,6 @@ class StartScene < Engine::Scene
       cat.dup.update(x: +128),
     ]
 
-    Engine::CompoundSprite.new(sprites: cats, x: grid.w_half - 65, y: 300.from_top)
+    Pod::CompoundSprite.new(sprites: cats, x: grid.w_half - 65, y: 300.from_top)
   end
 end
