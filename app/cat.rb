@@ -1,4 +1,4 @@
-class Cat < Engine::AnimatedSprite
+class Cat < Engine::CompoundSprite
   DEFAULT_SEQUENCE = [1]
   MOVE_SEQUENCES = {
     up: [9, 11],
@@ -11,10 +11,31 @@ class Cat < Engine::AnimatedSprite
     idle_right: [7],
   }.freeze
 
-  def initialize(*)
-    super
+  def initialize(mouse: mouse, keyboard: keyboard, **attributes)
+    cat = Engine::CompoundSprite.new(
+      sprites: [
+        $game.spritesheets.find(:cat3).animated_sprite(DEFAULT_SEQUENCE),
+        $game.spritesheets.find(:shadows).animated_sprite(DEFAULT_SEQUENCE, z_index: -1)
+      ]
+    )
+
+    cats = [
+      cat,
+      cat.dup.update(x: -32, y: 32, z_index: -1),
+      cat.dup.update(x: 32, y: 32, z_index: -1),
+    ]
     @moved = false
-    self.sequence = DEFAULT_SEQUENCE
+
+    super(sprites: cats, w: 64, h: 64, **attributes)
+    subscribe(mouse, keyboard)
+  end
+
+  def subscribe(mouse, keyboard)
+    mouse.subscribe(self, :click, :on_mouse_click)
+    mouse.subscribe(self, :double_click, :on_mouse_double_click)
+    mouse.subscribe(self, :moved, :on_mouse_move, global: true)
+    mouse.subscribe(self, :up, :on_mouse_up, global: true)
+    keyboard.subscribe(self, :key_held, :on_key_hold)
   end
 
   def on_mouse_click(event)
@@ -88,11 +109,22 @@ class Cat < Engine::AnimatedSprite
   private
 
   def set_animation(type)
-    self.sequence = move_sequence(type)
+    sequence = move_sequence(type)
+    sprites.each do |sprite|
+      sprite.sprites.each do |subsprite|
+        subsprite.update(sequence: sequence)
+      end
+    end
   end
 
   def set_idle_animation(type)
-    self.sequence = move_sequence(:"idle_#{type}") unless @idle
+    return if @idle
+    sequence = move_sequence(:"idle_#{type}")
+    sprites.each do |sprite|
+      sprite.sprites.each do |subsprite|
+        subsprite.update(sequence: sequence)
+      end
+    end
   end
 
   def move_sequence(type)

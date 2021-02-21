@@ -3,6 +3,7 @@ require 'lib/engine/attribute_assignment.rb'
 require 'lib/engine/unknown_attribute.rb'
 require 'lib/engine/sprite.rb'
 require 'lib/engine/animated_sprite.rb'
+require 'lib/engine/compound_sprite.rb'
 require 'lib/engine/spritesheet.rb'
 require 'lib/engine/event.rb'
 require 'lib/engine/mouse_event.rb'
@@ -21,6 +22,7 @@ module Engine
   class UnknownAttribute < NoMethodError; end
   class Sprite; end
   class AnimatedSprite < Sprite; end
+  class CompoundSprite < Sprite; end
   class SpriteSheet; end
   class Event; end
   class KeyboardEvent < Event; end

@@ -11,6 +11,8 @@ module Engine
           raise Engine::UnknownAttribute.new(self, name)
         end
       end
+
+      self
     end
 
     alias attributes= assign_attributes

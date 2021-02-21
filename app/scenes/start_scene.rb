@@ -18,18 +18,19 @@ class StartScene < Engine::Scene
   private
 
   def three_cats
-    spritesheet = $game.spritesheets.find(:cat3)
+    cat = Engine::CompoundSprite.new(
+      sprites: [
+        $game.spritesheets.find(:cat3).animated_sprite([0, 2], w: 128, h: 128),
+        $game.spritesheets.find(:shadows).animated_sprite([0, 2], w: 128, h: 128, z_index: -1)
+      ],
+    )
 
     cats = [
-      spritesheet.animated_sprite([3, 5], grid.w_half - 192, 300.from_top),
-      spritesheet.animated_sprite([0, 2], grid.w_half - 64, 300.from_top),
-      spritesheet.animated_sprite([6, 8], grid.w_half + 64, 300.from_top),
+      cat,
+      cat.dup.update(x: -128),
+      cat.dup.update(x: +128),
     ]
 
-    cats.each do |cat|
-      cat.update(w: 128, h: 128)
-    end
-
-    cats
+    Engine::CompoundSprite.new(sprites: cats, x: grid.w_half - 65, y: 300.from_top)
   end
 end

@@ -1,21 +1,18 @@
 class CatScene < Engine::Scene
+  attr_reader :spritesheet, :cat, :animated_sprite
   def load
     @spritesheet = $game.spritesheets.find(:cat3)
-    @animated_sprite = Engine::AnimatedSprite.new(x: 200, y: 300, spritesheet: @spritesheet, sequence: [0, 2, 0, 2, 3, 5, 3, 5, 6, 8, 6, 8])
-    @animated_sprite.update(
+    @animated_sprite = spritesheet.animated_sprite(
+      [0, 2, 0, 2, 3, 5, 3, 5, 6, 8, 6, 8],
+      200, 300,
       flip_vertically: true,
       angle_anchor_x: 0.5,
       angle_anchor_y: 0,
-      w: 100,
-      h: 100,
+      w: 200,
+      h: 200,
     )
 
-    @cat = Cat.new(x: 400, y: 150, spritesheet: @spritesheet)
-    mouse.subscribe(@cat, :click, :on_mouse_click)
-    mouse.subscribe(@cat, :double_click, :on_mouse_double_click)
-    mouse.subscribe(@cat, :moved, :on_mouse_move, global: true)
-    mouse.subscribe(@cat, :up, :on_mouse_up, global: true)
-    keyboard.subscribe(@cat, :key_held, :on_key_hold)
+    @cat = Cat.new(x: 400, y: 150, mouse: mouse, keyboard: keyboard, scale_w: 2)
   end
 
   def tick
@@ -25,12 +22,11 @@ class CatScene < Engine::Scene
       @animated_sprite.x = 0
     end
 
-    outputs.labels << [20, 50.from_top, "Test"]
     outputs.sprites << [
       @animated_sprite,
-      @board,
       @cat,
     ]
     outputs.borders << [200, 300, 32, 32]
+    outputs.labels << [10, 20.from_top, "FPS: #{gtk.current_framerate.to_i}"]
   end
 end
