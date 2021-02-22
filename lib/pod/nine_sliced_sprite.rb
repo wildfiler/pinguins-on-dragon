@@ -7,10 +7,11 @@ module Pod
 
     attr_accessor :visible, :z_index
 
-    def initialize(x: 0, y: 0, w:, h:, z_index: 0, spritesheet:, visible: true)
+    def initialize(x: 0, y: 0, w:, h:, z_index: 0, corners_ids: (0..8), spritesheet:, visible: true)
       @spritesheet = spritesheet
       @sprite_w = spritesheet.sprite_w
       @sprite_h = spritesheet.sprite_h
+      @corners_ids = corners_ids
       update(
         x: x,
         y: y,
@@ -87,7 +88,7 @@ module Pod
     end
 
     def tiles_xys
-      @tiles_xys ||= (0..8).map do |i|
+      @tiles_xys ||= @corners_ids.map do |i|
         spritesheet.id_to_xy(i)
       end
     end
