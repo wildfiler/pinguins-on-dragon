@@ -1,16 +1,18 @@
 module Pod
   class Event
-    attr_reader :type, :object
+    attr_reader :type, :object, :origin_event
 
-    def initialize(type, object)
+    def initialize(type, object, origin_event: nil)
       @type = type
       @object = object
+      @origin_event = origin_event
     end
 
     def serialize
       {
         type: type,
         object: object,
+        origin_event: origin_event,
       }
     end
 

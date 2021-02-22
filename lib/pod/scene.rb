@@ -33,5 +33,9 @@ module Pod
 
     def tick
     end
+
+    def tick_count
+      state.tick_count
+    end
   end
 end

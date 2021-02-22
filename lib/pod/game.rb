@@ -77,6 +77,10 @@ module Pod
       @spritesheets ||= Pod::Registry.new(:spritesheets)
     end
 
+    def ui_spritesheets
+      @ui_spritesheets ||= Pod::Registry.new(:ui_spritesheets)
+    end
+
     def serialize
       {
         scene: scene,

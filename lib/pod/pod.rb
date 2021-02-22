@@ -14,6 +14,10 @@ require 'lib/pod/mouse_events.rb'
 require 'lib/pod/registry.rb'
 require 'lib/pod/events_dispatcher.rb'
 require 'lib/pod/scene.rb'
+require 'lib/pod/nine_sliced_sprite.rb'
+require 'lib/pod/ui.rb'
+require 'lib/pod/ui/label.rb'
+require 'lib/pod/ui/button.rb'
 
 module Pod
   module AttributeAssignment; end
@@ -32,4 +36,9 @@ module Pod
   class Registry; end
   class EventsDispatcher; end
   class Scene; end
+  class NineSlicedSprite; end
+  module UI
+    class Label; end
+    class Button; end
+  end
 end
