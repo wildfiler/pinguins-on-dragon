@@ -1,18 +1,28 @@
 class StartScene < Pod::Scene
   def load
     @cats = three_cats
-    @label = [grid.w_half + 16, 300.from_top, "Press any key to start.", 10, 1]
-    mouse.subscribe(self, :up, :change_scene)
-    keyboard.subscribe(self, :all, :change_scene)
+    @button = Pod::UI::Button.new(x: grid.w_half - 50, y: 400.from_top, w: 100, h: 50, mouse: mouse, text: "Start!")
+    @button.subscribe(self, :clicked, :change_scene)
   end
 
   def tick
     outputs.sprites << @cats
-    outputs.labels << @label
+    if @next_scene_at && (@next_scene_at - 1.8.seconds).elapsed?
+      @button.visible = false
+      outputs.labels << [grid.w_half + 16, 350.from_top, "Loading...", 10, 1]
+    else
+      outputs.sprites << @button
+    end
   end
 
   def change_scene(_event)
-    @next_scene = CatScene.new
+    @next_scene_at = tick_count + 2.seconds
+  end
+
+  def next_scene
+    if @next_scene_at&.elapsed?
+      CatScene.new
+    end
   end
 
   private

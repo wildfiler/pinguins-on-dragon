@@ -4,6 +4,7 @@ require 'app/my_game.rb'
 require 'app/cat.rb'
 require 'app/scenes/cat_scene.rb'
 require 'app/scenes/start_scene.rb'
+require 'app/scenes/ui_scene.rb'
 
 def tick(args)
   Pod::Game.tick(MyGame, args)
