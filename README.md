@@ -46,5 +46,9 @@ If you want to add docs to DRGTK console add `require 'lib/pod/pod_docs.rb` to `
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 
+## Credits
+
+Thanks to [Kenney](www.kenney.nl) and [Pipoya](pipoya.itch.io) for beautiful arts used in samples!  
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
