@@ -1,14 +1,15 @@
 module Pod
   class SpriteSheet
-    attr_reader :name, :sprite_w, :sprite_h, :width
+    attr_reader :name, :sprite_w, :sprite_h, :width, :spacing
 
-    def initialize(path: nil, name: nil, sprite_size:, width:)
+    def initialize(path: nil, name: nil, sprite_size:, width:, spacing: 0)
       @path = path
       @name = name
       @sprite_w = sprite_size[0]
       @sprite_h = sprite_size[1]
       @width = width
-      @row_size = width / sprite_w
+      @spacing = spacing
+      @row_size = width / (sprite_w + spacing)
     end
 
     def path
@@ -52,7 +53,7 @@ module Pod
 
     def id_to_xy(id)
       y, x = id.divmod(@row_size)
-      [x.to_i * sprite_w, y.to_i * sprite_h]
+      [x.to_i * (sprite_w + spacing), y.to_i * (sprite_h + spacing)]
     end
   end
 end
